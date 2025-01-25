@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+	<class name="modelo.Vehiculos" table="vehiculos">
+		<id name="id" type="int">
+			<column name="id" />
+
+		</id>
+		
+		<property name="marca" type="string">
+			<column name="Marca" length="45" not-null="true" />
+		</property>
+		
+		
+		<property name="modelo" type="string">
+			<column name="Modelo" length="45" not-null="true" />
+		</property>
+		
+		
+		<property name="matricula" type="string">
+			<column name="Matricula" length="45" not-null="true" />
+		</property>		
+		
+	</class>
+
+</hibernate-mapping>

@@ -1,0 +1,12 @@
+<Vehiculos>
+  <Coche id="1">
+    <Marca>mclaren</Marca>
+    <Modelo>mcl23</Modelo>
+    <Matricula>123f</Matricula>
+  </Coche>
+  <Coche id="2">
+    <Marca>redbull</Marca>
+    <Modelo>rb20</Modelo>
+    <Matricula>6327</Matricula>
+  </Coche>
+</Vehiculos>
