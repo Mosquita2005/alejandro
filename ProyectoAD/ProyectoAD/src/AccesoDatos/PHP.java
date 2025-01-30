@@ -22,6 +22,14 @@ public class PHP  implements Interfaz{
 	private HashMap<Integer, Vehiculos> mapaphp= new HashMap<>();
 	
 	public PHP() {
+	
+
+	}
+	
+	@Override
+	public void iniciar() {
+		// TODO Auto-generated method stub
+		System.err.println("Acceso a php");
 		encargadoPeticiones = new auxiliar.ApiRequests();
 		SERVER_PATH = "http://localhost/alejandro/VehiculosJSONServer/";
 		GET_CAR = "leervehiculos.php";
@@ -30,8 +38,9 @@ public class PHP  implements Interfaz{
 		DEL_CAR= "eliminarvehiculo.php";
 		GET_CARID="leervehiculosid.php";
 		mapaphp= capturar();
-
+	
 	}
+
 
 	public void mostrar() throws IOException, ClassNotFoundException, Exception {
 		// TODO Auto-generated method stub
@@ -498,6 +507,7 @@ public class PHP  implements Interfaz{
 		
 	}
 
+	
 	
 
 
