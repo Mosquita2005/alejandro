@@ -22,15 +22,23 @@ public class DBO implements Interfaz{
 	private static EntityManagerFactory emf;
 	private Vehiculos v;
 	public DBO() {
-        if (emf == null) {
-            emf = Persistence.createEntityManagerFactory("db/coches.odb");
-        }
-        if (em == null) {
-            em = emf.createEntityManager();
-        }
-        mapadbo=capturar();
+       
 		
 		}
+	@Override
+	public void iniciar() {
+		// TODO Auto-generated method stub
+		System.err.println("Acceso a ObjectDB");
+
+		  if (emf == null) {
+	          emf = Persistence.createEntityManagerFactory("db/coches.odb");
+	      }
+	      if (em == null) {
+	          em = emf.createEntityManager();
+	      }
+	      mapadbo=capturar();
+			
+			}
 	
 	@Override
 	public void mostrar() throws IOException, ClassNotFoundException, Exception {
@@ -46,7 +54,6 @@ public class DBO implements Interfaz{
 	        for (Vehiculos bb : results) {
 	            System.out.println(bb);
 	        }
-	        cerrar();
 	}
 
 	@Override
@@ -80,25 +87,118 @@ public class DBO implements Interfaz{
 	    	 System.err.println("Se ha producido un error an intentar acceder a la base de datos\n"
 						+ "Probablemente sea porque está abierta por el ObjectDB explorer");
 	     }
-	cerrar();
 	}
 
 	@Override
 	public void modificar() throws IOException, Exception {
 		// TODO Auto-generated method stub
-		
+		Scanner sc= new Scanner(System.in);
+		System.out.println("Introduzca el ID del vehiculo a modificar ");
+		boolean encontrado=false;
+		int id= sc.nextInt();
+		 
+		try {
+		Vehiculos v= em.find(Vehiculos.class,id);
+			 
+			if(v!=null) {
+			encontrado=true;
+			System.out.println("Introduzca la marca del vehiculo");
+			     String marca = sc.next();
+			     System.out.println("Introduzca el modelo del vehiculo");
+			     String modelo = sc.next();
+			     System.out.println("Introduzca la matricula del vehiculo");
+			     String matricula = sc.next();
+			     v.setMarca(marca);
+			     v.setMatricula(matricula);
+			     v.setModelo(modelo);
+			     
+			     em.getTransaction().begin();
+			     em.merge(v);
+			     em.getTransaction().commit();
+			     System.out.println("Vehiculo modificado");
+			 
+			}
+			 
+		 
+		 
+		}catch(Exception e) {
+		System.out.println(e.getMessage());
+		 
+		 
+		}
+		 
+		if(!encontrado) {
+		System.out.println("Vehiculo no encontrado");
+		}
+		 
 	}
+	
 
 	@Override
 	public void borrar() throws IOException, Exception {
 		// TODO Auto-generated method stub
+		Scanner sc= new Scanner(System.in);
+		System.out.println("Introduzca el ID del vehiculo a borrar ");
+		boolean encontrado=false;
+		int id= sc.nextInt();
+		 
+		try {
+		Vehiculos v= em.find(Vehiculos.class,id);
+		 
+		if(v!=null) {
+		 
+		     em.getTransaction().begin();
+		     em.remove(v);
+		     em.getTransaction().commit();
+		     
+		     mapadbo.remove(id);
+		     System.out.println("Vehiculo borrado del Hasmap");
+		     System.out.println("Vehiculo borrado de la base de datos");
+		 
+		 
+		}
+		 
+		 
+		 
+		}catch(Exception e) {
+		System.out.println(e.getMessage());
+		 
+		 
+		}
+		 
+		if(!encontrado) {
+		System.out.println("Vehiculo no encontrado");
+		}
 		
 	}
 
 	@Override
 	public void buscarID() throws IOException, Exception {
 		// TODO Auto-generated method stub
-		
+		Scanner sc= new Scanner(System.in);
+		boolean encontrado= true;
+		System.out.println("Introduzca el id del vehiculo a buscar");
+		int id=sc.nextInt();
+		 
+		 
+		try {
+		Vehiculos v= em.find(Vehiculos.class, id);
+		if(v!=null) {
+		encontrado=true;
+		  System.out.println("Vehículo encontrado:");
+		            System.out.println("ID: " + v.getId());
+		            System.out.println("Marca: " + v.getMarca());
+		            System.out.println("Modelo: " + v.getModelo());
+		            System.out.println("Matrícula: " + v.getMatricula());
+		 
+		} 
+		}catch (Exception e) {
+		System.out.println(e.getMessage());
+		}
+		 
+		if(!encontrado) {
+		System.out.println("Vehiculo no encontrado");
+		}
 	}
 
 	@Override
@@ -134,5 +234,8 @@ public HashMap<Integer, Vehiculos> capturar(){
 
 		return aux;
 	}
+
+
+
 
 }
