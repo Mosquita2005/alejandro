@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +22,13 @@ private HashMap<Integer, Vehiculos>mapasqlite=new  HashMap<Integer, Vehiculos>()
 	public SQLite() {
 		
 		
-		
+	}
+
+
+	@Override
+	public void iniciar() {
+		// TODO Auto-generated method stub
+		System.err.println("Acceso a sqlite");
 		try {
 			Class.forName("org.sqlite.JDBC");
 			
@@ -29,8 +36,8 @@ private HashMap<Integer, Vehiculos>mapasqlite=new  HashMap<Integer, Vehiculos>()
 		}catch (Exception e) {
 			// TODO: handle exception
 		}
+		mapasqlite=capturar();
 	}
-
 	@Override
 	public void mostrar() throws IOException, ClassNotFoundException, Exception {
 		String query="select * from vehiculos";
@@ -44,7 +51,6 @@ private HashMap<Integer, Vehiculos>mapasqlite=new  HashMap<Integer, Vehiculos>()
 
 			System.out.println(id+" | "+ marca+" | "+" | "+ modelo+" | "+ matricula+" | \n" );
 		}
-		st.close();
 	
 	}
 
@@ -183,6 +189,41 @@ private HashMap<Integer, Vehiculos>mapasqlite=new  HashMap<Integer, Vehiculos>()
 		st.close();
 		
 	}
+	
+	public HashMap<Integer, Vehiculos> capturar(){
+		HashMap<Integer, Vehiculos> aux= new HashMap<Integer, Vehiculos>();
+		// TODO Auto-generated method stub
+			try {
+				String query="select * from vehiculos";
+				Statement st =conn.createStatement();
+				ResultSet rs= st.executeQuery(query);
+				while(rs.next()) {
+					int id=rs.getInt(1);
+					String marca=rs.getString(2);
+					String modelo=rs.getString(3);
+					String matricula=rs.getString(4);
+			Vehiculos v= new Vehiculos(modelo,marca,matricula,id);
+					aux.put(id, v);
+					
+				}
+				st.close();
+			}catch(Exception e) {
+				System.out.println(e.getMessage());
+			}
+
+		return aux;
+	}
+	
+	public void cerrar() {
+		// TODO Auto-generated method stub
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	public HashMap<Integer, Vehiculos> getMapasqlite() {
 	return mapasqlite;
 	}
@@ -191,4 +232,5 @@ private HashMap<Integer, Vehiculos>mapasqlite=new  HashMap<Integer, Vehiculos>()
 
 	this.mapasqlite = mapasqlite;
 }
+
 }
