@@ -16,8 +16,15 @@ public class Ficheros implements Interfaz {
     
     private HashMap<Integer, Vehiculos> mapatexto = new HashMap<>();
     private File archivo=new File("ficheros/texto.txt");
-
-   
+    
+    public Ficheros() {
+    	
+    }
+	@Override
+	public void iniciar() {
+		// TODO Auto-generated method stub
+		System.err.println("Acceso a ficheros");
+	}
 
     public void mostrar() throws IOException {
         FileReader fr = new FileReader(archivo);
@@ -168,6 +175,8 @@ public class Ficheros implements Interfaz {
 
 	        	
 	}
+
+
 
 
     
