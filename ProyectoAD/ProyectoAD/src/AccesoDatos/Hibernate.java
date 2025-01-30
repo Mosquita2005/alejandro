@@ -31,10 +31,16 @@ public class Hibernate implements Interfaz {
 	private Vehiculos v;
 	private HashMap<Integer,Vehiculos>mapahb= new HashMap<>();
 	public Hibernate() {
-			session =HibernateUtil.getSession();
-			mapahb=capturar();
-		 
+			
+
 	}
+	@Override
+	public void iniciar() {
+		// TODO Auto-generated method stub
+		session =HibernateUtil.getSession();
+		mapahb=capturar();
+
+	}	
 
 @Override
 public void mostrar() throws IOException, ClassNotFoundException {
@@ -214,6 +220,9 @@ public HashMap<Integer, Vehiculos> capturar(){
 
 
 }
+public void cerrar() {
+	session.close();
+}
 
 public HashMap<Integer, Vehiculos> getMapahb() {
 	return mapahb;
@@ -221,7 +230,9 @@ public HashMap<Integer, Vehiculos> getMapahb() {
 
 public void setMapahb(HashMap<Integer, Vehiculos> mapahb) {
 	this.mapahb = mapahb;
-}	
+}
+
+
 }
 
 
