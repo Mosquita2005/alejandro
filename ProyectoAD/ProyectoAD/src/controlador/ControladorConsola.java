@@ -21,17 +21,17 @@ public class ControladorConsola {
 	    private BaseX basex;
 	    private Mongo mongo;
 	    public ControladorConsola() {
+	    	this.consola=new Consola();
 	    	this.bd=new BBDD();
 	    	this.binarios=new Binarios();
 	    	this.fichero= new Ficheros();
 	    	this.xml= new XML();
 	    	this.hb= new Hibernate();
-	    	this.consola=new Consola();
-	    	this.sqlite=new SQLite();
 	    	this.php= new PHP();
-	    	this.dbo=new DBO();
-	    	this.basex=new BaseX();
-	    	this.mongo= new Mongo();
+	    	this.dbo= new DBO();
+	    	this.consola=new Consola();
+	    	this.basex= new BaseX();
+	    	
 	    }
 	    
 	   
@@ -43,16 +43,16 @@ public class ControladorConsola {
 	        do {
 	            opc1 = consola.mostrarMenuSecundario();
 	            switch (opc1) {
-	                case 1 -> FicherosManager();
-	                case 2 -> BinariosManager();
-	                case 3 -> XMLManager();
-	                case 4 -> BaseDatosManager();
-	                case 5 -> HibernateManager();
-	                case 6 -> SqliteManager();
-	                case 7 -> PhpManager();
-	                case 8 -> DboManager();
-	                case 9 -> BasexManager();
-	                case 10 -> MongoManager();
+	                case 1 ->{fichero= new Ficheros(); fichero.iniciar();FicherosManager();} 
+	                case 2 ->{binarios = new Binarios();binarios.iniciar();BinariosManager();} 
+	                case 3 -> {xml= new XML(); xml.iniciar();XMLManager();}
+	                case 4 -> {bd = new BBDD(); bd.iniciar();BaseDatosManager();}
+	                case 5 -> {hb = new Hibernate(); hb.iniciar();HibernateManager();}
+	                case 6 -> {sqlite= new SQLite(); sqlite.iniciar();SqliteManager();}
+	                case 7 -> {php = new PHP(); php.iniciar();PhpManager();}
+	                case 8 -> {dbo= new DBO();dbo.iniciar();DboManager();}
+	                case 9 -> {basex= new BaseX();basex.iniciar();BasexManager();}
+	                case 10 -> {mongo = new Mongo(); mongo.iniciar();MongoManager();}
 	                case 11 -> transferenciadatos();
 	                case 12 -> consola.mostrarMensaje("Has salido del menu principal");
 
@@ -147,7 +147,7 @@ public class ControladorConsola {
 				  case 3->bd.modificar();
 				  case 4->bd.borrar();
 				  case 5->bd.buscarID();
-				  case 6->consola.mostrarMensaje("Has salido del menu secundario");
+				  case 6->{bd.cerrar();consola.mostrarMensaje("Has salido del menu secundario");}
 
 				  
 				  
@@ -171,7 +171,7 @@ public class ControladorConsola {
 				  case 3->hb.modificar();
 				  case 4->hb.borrar();
 				  case 5->hb.buscarID();
-				  case 6->consola.mostrarMensaje("Has salido del menu secundario");
+				  case 6->{hb.cerrar();consola.mostrarMensaje("Has salido del menu secundario");}
 
 				  
 				  
@@ -195,7 +195,7 @@ public class ControladorConsola {
 				  case 3->sqlite.modificar();
 				  case 4->sqlite.borrar();
 				  case 5->sqlite.buscarID();
-				  case 6->consola.mostrarMensaje("Has salido del menu secundario");
+				  case 6->{sqlite.cerrar();consola.mostrarMensaje("Has salido del menu secundario");}
 
 				  
 				  
@@ -243,7 +243,7 @@ public class ControladorConsola {
 				  case 3->dbo.modificar();
 				  case 4->dbo.borrar();
 				  case 5->dbo.buscarID();
-				  case 6->consola.mostrarMensaje("Has salido del menu secundario");
+				  case 6->{dbo.cerrar();consola.mostrarMensaje("Has salido del menu secundario");}
 
 				  
 				  
@@ -292,7 +292,7 @@ public class ControladorConsola {
 				  case 3->mongo.modificar();
 				  case 4->mongo.borrar();
 				  case 5->mongo.buscarID();
-				  case 6->consola.mostrarMensaje("Has salido del menu secundario");
+				  case 6->{mongo.cerrar();consola.mostrarMensaje("Has salido del menu secundario");}
 
 				  
 				  
