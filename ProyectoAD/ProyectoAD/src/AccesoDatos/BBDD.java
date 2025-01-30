@@ -28,26 +28,26 @@ public class BBDD implements Interfaz {
 	private static final String url="jdbc:mysql://" + host + ":" + puerto + "/" + nombre;
 	private static final String user="root";
 	private static final String password="";
-	private static boolean printed=false;
-	private Vehiculos v;
 	public BBDD() {
+
 		
+	}
+
+	
+	@Override
+	public void iniciar() {
+		// TODO Auto-generated method stub
+		System.err.println("Acceso a Base de datos");
+
 		try {
 			Class.forName(driver);
 			conn = DriverManager.getConnection(url, user, password);
-			if(!printed) {
-				System.out.println(url);
-				printed=true;
-			}
-			
 			mapabd=capturar();
+
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
 	}
-
-	
-	
 	
 	
 	
@@ -68,7 +68,6 @@ public class BBDD implements Interfaz {
 	Statement st =conn.createStatement();
 	 st.executeUpdate(query);
 	System.out.println("vehiculo añadido a la Base de datos");
-	st.close();
 	
 		
 	}
@@ -89,7 +88,6 @@ public class BBDD implements Interfaz {
 			System.out.println(id+" | "+ marca+" | "+" | "+ modelo+" | "+ matricula+" | \n" );
 		}
 		st.close();
-		cerrar();
 	}
 	
 	
@@ -99,11 +97,10 @@ public class BBDD implements Interfaz {
 		boolean encontrado=false;
 		System.out.println("Introduzca el ID del vehiculo a modificar ");
 		int id= sc.nextInt();
-		Vehiculos v;
-		for(Map.Entry<Integer, Vehiculos> aux: mapabd.entrySet()) {
-			v=aux.getValue();
+		Vehiculos v= mapabd.get(id);
+	
 			
-			if(id==aux.getKey()) {
+			if(v!=null) {
 				encontrado=true;
 				 System.out.println("Introduzca la marca del vehiculo");
 			     String marca = sc.next();
@@ -115,10 +112,12 @@ public class BBDD implements Interfaz {
 			     v.setMatricula(matricula);
 			     v.setModelo(modelo);
 				Statement st= conn.createStatement();
-				String query="update vehiculos set marca ="+"'"+marca+"', modelo="+"'"+modelo+"',matricula="+"'"+matricula+"'"+"where id = "+id;
+				String query="update vehiculos set marca = "+"'"+marca+"', modelo = "+"'"+modelo+"',matricula = "+"'"+matricula+"'"+"where id = "+id;
 				st.executeUpdate(query);
+				System.out.println("vehiculo modificado");
+
 			}
-		}
+		
 		
 		if(!encontrado) {
 			
@@ -133,15 +132,16 @@ public class BBDD implements Interfaz {
 		boolean encontrado=false;
 		System.out.println("Introduzca el ID del vehiculo a borrar ");
 		int id=sc.nextInt();
-		for(Map.Entry<Integer, Vehiculos> aux: mapabd.entrySet()) {
-			if(id==aux.getKey()) {
+		Vehiculos v= mapabd.get(id);
+			if(v!=null) {
 				Statement st= conn.createStatement();
-				String query="delete from vehiculos where id =" +id;
+				String query="delete from vehiculos where id = " +id;
 				encontrado=true;
 				st.executeUpdate(query);
+				mapabd.remove(id);
 				System.out.println("vehiculo borrado");
 				
-			}
+			
 			
 		}
 	
@@ -165,9 +165,9 @@ public class BBDD implements Interfaz {
 		int idbuscar=sc.nextInt();
 		boolean encontrado=false;
 		
-		for(Map.Entry<Integer, Vehiculos> aux: mapabd.entrySet()) {
+		Vehiculos v= mapabd.get(idbuscar);
 			
-			if(idbuscar==aux.getKey()) {
+			if(v!=null) {
 				encontrado=true;
 				String query="select * from vehiculos where id ="+idbuscar;
 				Statement st =conn.createStatement();
@@ -184,7 +184,7 @@ public class BBDD implements Interfaz {
 				
 			}
 			
-		}
+		
 		
 		if(!encontrado) {
 			
@@ -222,11 +222,10 @@ public class BBDD implements Interfaz {
 					String marca=rs.getString(2);
 					String modelo=rs.getString(3);
 					String matricula=rs.getString(4);
-					v= new Vehiculos(modelo,marca,matricula,id);
+					Vehiculos v= new Vehiculos(modelo,marca,matricula,id);
 					aux.put(id, v);
 					
 				}
-				st.close();
 			}catch(Exception e) {
 				System.out.println(e.getMessage());
 			}
@@ -263,4 +262,11 @@ public class BBDD implements Interfaz {
 			e.printStackTrace();
 		}
 	}
+
+
+
+
+
+
+	
 }
