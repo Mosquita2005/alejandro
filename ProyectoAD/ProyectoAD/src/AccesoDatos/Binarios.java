@@ -2,6 +2,7 @@ package AccesoDatos;
 import java.io.File;
 
 
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -17,6 +18,16 @@ import modelo.Vehiculos;
 public class Binarios implements Interfaz{
 	private HashMap <Integer,Vehiculos>mapabinario= new HashMap<>();
 	private File Bin= new File("ficheros/textobin.bin");
+	public Binarios() {
+		
+		
+	}
+	@Override
+	public void iniciar() {
+		// TODO Auto-generated method stub
+		System.err.println("Acceso a binarios");
+
+	}
 	@Override
 	public void mostrar() throws IOException, ClassNotFoundException {
 		FileInputStream fis=new FileInputStream (Bin);
@@ -177,6 +188,8 @@ public class Binarios implements Interfaz{
 	      
 
 	}
+
+	
 	
 	
 	
