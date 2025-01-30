@@ -29,6 +29,12 @@ public class XML implements Interfaz {
 	
 	public XML() {
 		
+		
+	}
+	@Override
+	public void iniciar() {
+		// TODO Auto-generated method stub
+		System.err.println("Acceso a XML");
 		mapaxml=capturar();
 	}
 	
@@ -357,5 +363,7 @@ public class XML implements Interfaz {
 		
 		return aux;
 	}
+
+	
 
 }
